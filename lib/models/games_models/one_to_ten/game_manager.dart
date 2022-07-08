@@ -17,6 +17,7 @@ class GameManager with _$GameManager{
   const factory GameManager({
     @Default([]) List<Player> players,
     @Default([]) List<String> randomQuestions,
+    @Default([]) List<String> allQuestions,
     @Default("") String question,
     @Default(GameStatus.answering) GameStatus status,
     @Default(0) int currentRound,

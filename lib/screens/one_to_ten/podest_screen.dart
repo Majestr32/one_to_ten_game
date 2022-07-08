@@ -37,7 +37,7 @@ class PodestScreen extends ConsumerWidget {
               child: Container(
                 margin: EdgeInsets.only(bottom: 15),
                 child: ActiveButton(text: AppLocalizations.of(context)!.button_menu, onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.of(context).pop();
           },),
               )),
         ],

@@ -16,7 +16,7 @@ class GamesRepositoryNotifier extends StateNotifier<GamesRepository>{
 
 class GameSettingsNotifier extends StateNotifier<GameSettings>{
   //create default value here
-  GameSettingsNotifier() : super(GameSettings(info: GameInfo(minRounds: 1, maxRounds: 2,idName: '',name: '', minPlayers: 3, maxPlayers: 6, assetPath: '')));
+  GameSettingsNotifier() : super(GameSettings(info: GameInfo(minRounds: 1, maxRounds: 2,idName: '',name: '', minPlayers: 4, maxPlayers: 8, assetPath: '')));
 
   void init(GameSettings settings){
     state = settings;

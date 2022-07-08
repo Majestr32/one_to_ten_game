@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1713800813",
+    "project_id": "one-to-ten-game",
+    "storage_bucket": "one-to-ten-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1713800813:android:38a4d8209a74aaf590a164",
+        "android_client_info": {
+          "package_name": "com.example.one_to_ten_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1713800813-d3qf4tqjrapjcg4ai97r06rroepjpijk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBafBCFYgPisG7sIXuQZxYKude_HN8u1QQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1713800813-d3qf4tqjrapjcg4ai97r06rroepjpijk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

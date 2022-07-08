@@ -21,7 +21,7 @@ class GamePreparation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settingsState = ref.read(currentGameSettingsProvider);
+    final settingsState = ref.watch(currentGameSettingsProvider);
     final settingsNotifier = ref.read(currentGameSettingsProvider.notifier);
     return Scaffold(
       appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_game_preparation,),
@@ -57,8 +57,8 @@ class GamePreparation extends ConsumerWidget {
               _textAndDropdown(AppLocalizations.of(context)!.timelimit_text, ['-'], (item){}),
               Spacer(),
               ActiveButton(onPressed: () async{
-                ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider));
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuestionChoice()));
+                await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => QuestionChoice()));
               }, text: AppLocalizations.of(context)!.button_start),
               SizedBox(height: 15,),
             ],

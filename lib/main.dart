@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:one_to_ten_game/providers/games_provider.dart';
 import 'package:one_to_ten_game/providers/locale_provider.dart';
+import 'package:one_to_ten_game/providers/one_to_ten_game_provider.dart';
 import 'package:one_to_ten_game/repositories/games/games_repository.dart';
 import 'package:one_to_ten_game/screens/one_to_ten/instruction.dart';
 import 'package:one_to_ten_game/widgets/dropdown.dart';
@@ -19,6 +21,7 @@ import 'models/game_info/game_info.dart';
 
 void main() async{
   await WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -29,19 +32,25 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate
+    return ProviderScope(
+      overrides: [
+        oneToTenGameProvider.overrideWithValue(OneToTenGameNotifier()),
+        currentGameSettingsProvider.overrideWithValue(GameSettingsNotifier()),
       ],
-      routes: {
-        "/1to10game": (context) => InstructionScreen()
-      },
-      locale: locale,
-      supportedLocales: L10n.supported,
-      home: const HomePage(),
+      child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate
+        ],
+        routes: {
+          "/1to10game": (context) => InstructionScreen()
+        },
+        locale: locale,
+        supportedLocales: L10n.supported,
+        home: const HomePage(),
+      ),
     );
   }
 }

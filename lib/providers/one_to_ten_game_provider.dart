@@ -4,10 +4,12 @@ import 'dart:developer' as dev;
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:one_to_ten_game/models/games_models/one_to_ten/game_manager.dart';
+import 'package:one_to_ten_game/repositories/one_to_ten_games/questions_repository.dart';
 
 import '../models/game_settings/one_to_ten/game_settings.dart';
 import '../models/games_models/one_to_ten/answer.dart';
 import '../models/games_models/one_to_ten/player.dart';
+
 
 final oneToTenGameProvider = StateNotifierProvider<OneToTenGameNotifier, GameManager>((ref) => OneToTenGameNotifier());
 
@@ -17,9 +19,12 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
     _gameSettings = gameSettings;
   }
 
-  void init(GameSettings gameSettings){
+  Future<void> init(GameSettings gameSettings) async{
     _gameSettings = gameSettings;
-    state = state.copyWith.call(question: _randomQuestion(),players: List.generate(_gameSettings!.playersCount, (index) => Player(number: index + 1, score: 0)));
+    //hardcoded because i am really tired
+    final allQuestions = await QuestionsRepository().getQuestions();
+    log(allQuestions.length);
+    state = state.copyWith.call(allQuestions: allQuestions, players: List.generate(_gameSettings!.playersCount, (index) => Player(number: index + 1, score: 0)));
   }
   void submitAnswer(Answer answer){
     state = state.copyWith.call(realAnswers: [...state.realAnswers, answer]);
@@ -83,15 +88,8 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
     state = state.copyWith(question: question);
   }
   String _randomQuestion(){
-    final questions = [
-      "Who are you?",
-      "What are you doing?",
-      "Tell",
-      "Do you know?",
-      "Tell me your friend"
-    ];
     final _random = new Random();
-    return questions[_random.nextInt(questions.length)];
+    return state.allQuestions[_random.nextInt(state.allQuestions.length)];
   }
   void _notifyNextIsGuessing(){
     state = state.copyWith.call(status: GameStatus.guessing);

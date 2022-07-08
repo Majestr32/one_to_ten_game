@@ -43,8 +43,8 @@ class _InstructionScreenState extends ConsumerState<InstructionScreen> {
               Spacer(),
               ImageIcon(KIcons.instructions.image, size: 196,),
               Spacer(),
-              ActiveButton(onPressed: (){
-                ref.watch(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider));
+              ActiveButton(onPressed: () async{
+                await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider));
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GamePreparation()));
               }, text: AppLocalizations.of(context)!.button_skip),
               SizedBox(height: 20,)

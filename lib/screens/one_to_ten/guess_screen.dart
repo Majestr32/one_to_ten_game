@@ -47,22 +47,26 @@ class _GuessScreenState extends ConsumerState<GuessScreen> {
                       height: 1,
                       child: HorizontalLine()),
                   SizedBox(height: 15,),
-                  ListView.builder(
-                      itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, i){
-                        return Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                              children: [
-                                PlayerDropdownNameBox(guesserNumber: ref.watch(oneToTenGameProvider).guesserPlayerNumber, onItemChanged: (val){
-                                  guesses[i] = Answer(playerNumber: int.parse(val), answer: ref.watch(oneToTenGameProvider).realAnswers[i].answer);
-                                }, totalPlayersCount: ref.watch(oneToTenGameProvider).players.length),
-                                SizedBox(height: 5,),
-                                PlayerAnswerTextBox(playerNumber: ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber, initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
-                              ],
-                            ));
-                      }),
+                  ((){
+                    final realAnswersCopy = [...ref.watch(oneToTenGameProvider).realAnswers];
+                    realAnswersCopy.shuffle();
+                    return ListView.builder(
+                        itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, i){
+                          return Container(
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              child: Column(
+                                children: [
+                                  PlayerDropdownNameBox(guesserNumber: ref.watch(oneToTenGameProvider).guesserPlayerNumber, onItemChanged: (val){
+                                    guesses[i] = Answer(playerNumber: int.parse(val), answer: realAnswersCopy[i].answer);
+                                  }, totalPlayersCount: ref.watch(oneToTenGameProvider).players.length),
+                                  SizedBox(height: 5,),
+                                  PlayerAnswerTextBox(playerNumber: realAnswersCopy[i].playerNumber, initialValue: realAnswersCopy[i].answer, readOnly: true,),
+                                ],
+                              ));
+                        });
+                  }()),
                   SizedBox(height: 50,),
                   ActiveButton(onPressed: (){
                     if(guesses.any((ans) => ans.answer == "-")){

@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameManager {
   List<Player> get players => throw _privateConstructorUsedError;
   List<String> get randomQuestions => throw _privateConstructorUsedError;
+  List<String> get allQuestions => throw _privateConstructorUsedError;
   String get question => throw _privateConstructorUsedError;
   GameStatus get status => throw _privateConstructorUsedError;
   int get currentRound => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $GameManagerCopyWith<$Res> {
   $Res call(
       {List<Player> players,
       List<String> randomQuestions,
+      List<String> allQuestions,
       String question,
       GameStatus status,
       int currentRound,
@@ -62,6 +64,7 @@ class _$GameManagerCopyWithImpl<$Res> implements $GameManagerCopyWith<$Res> {
   $Res call({
     Object? players = freezed,
     Object? randomQuestions = freezed,
+    Object? allQuestions = freezed,
     Object? question = freezed,
     Object? status = freezed,
     Object? currentRound = freezed,
@@ -79,6 +82,10 @@ class _$GameManagerCopyWithImpl<$Res> implements $GameManagerCopyWith<$Res> {
       randomQuestions: randomQuestions == freezed
           ? _value.randomQuestions
           : randomQuestions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      allQuestions: allQuestions == freezed
+          ? _value.allQuestions
+          : allQuestions // ignore: cast_nullable_to_non_nullable
               as List<String>,
       question: question == freezed
           ? _value.question
@@ -126,6 +133,7 @@ abstract class _$$_GameManagerCopyWith<$Res>
   $Res call(
       {List<Player> players,
       List<String> randomQuestions,
+      List<String> allQuestions,
       String question,
       GameStatus status,
       int currentRound,
@@ -150,6 +158,7 @@ class __$$_GameManagerCopyWithImpl<$Res> extends _$GameManagerCopyWithImpl<$Res>
   $Res call({
     Object? players = freezed,
     Object? randomQuestions = freezed,
+    Object? allQuestions = freezed,
     Object? question = freezed,
     Object? status = freezed,
     Object? currentRound = freezed,
@@ -167,6 +176,10 @@ class __$$_GameManagerCopyWithImpl<$Res> extends _$GameManagerCopyWithImpl<$Res>
       randomQuestions: randomQuestions == freezed
           ? _value._randomQuestions
           : randomQuestions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      allQuestions: allQuestions == freezed
+          ? _value._allQuestions
+          : allQuestions // ignore: cast_nullable_to_non_nullable
               as List<String>,
       question: question == freezed
           ? _value.question
@@ -210,6 +223,7 @@ class _$_GameManager implements _GameManager {
   const _$_GameManager(
       {final List<Player> players = const [],
       final List<String> randomQuestions = const [],
+      final List<String> allQuestions = const [],
       this.question = "",
       this.status = GameStatus.answering,
       this.currentRound = 0,
@@ -220,6 +234,7 @@ class _$_GameManager implements _GameManager {
       final List<Answer> guessedAnswers = const []})
       : _players = players,
         _randomQuestions = randomQuestions,
+        _allQuestions = allQuestions,
         _realAnswers = realAnswers,
         _guessedAnswers = guessedAnswers;
 
@@ -237,6 +252,14 @@ class _$_GameManager implements _GameManager {
   List<String> get randomQuestions {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_randomQuestions);
+  }
+
+  final List<String> _allQuestions;
+  @override
+  @JsonKey()
+  List<String> get allQuestions {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allQuestions);
   }
 
   @override
@@ -275,7 +298,7 @@ class _$_GameManager implements _GameManager {
 
   @override
   String toString() {
-    return 'GameManager(players: $players, randomQuestions: $randomQuestions, question: $question, status: $status, currentRound: $currentRound, currentSubRound: $currentSubRound, currentPlayerNumber: $currentPlayerNumber, guesserPlayerNumber: $guesserPlayerNumber, realAnswers: $realAnswers, guessedAnswers: $guessedAnswers)';
+    return 'GameManager(players: $players, randomQuestions: $randomQuestions, allQuestions: $allQuestions, question: $question, status: $status, currentRound: $currentRound, currentSubRound: $currentSubRound, currentPlayerNumber: $currentPlayerNumber, guesserPlayerNumber: $guesserPlayerNumber, realAnswers: $realAnswers, guessedAnswers: $guessedAnswers)';
   }
 
   @override
@@ -286,6 +309,8 @@ class _$_GameManager implements _GameManager {
             const DeepCollectionEquality().equals(other._players, _players) &&
             const DeepCollectionEquality()
                 .equals(other._randomQuestions, _randomQuestions) &&
+            const DeepCollectionEquality()
+                .equals(other._allQuestions, _allQuestions) &&
             const DeepCollectionEquality().equals(other.question, question) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
@@ -307,6 +332,7 @@ class _$_GameManager implements _GameManager {
       runtimeType,
       const DeepCollectionEquality().hash(_players),
       const DeepCollectionEquality().hash(_randomQuestions),
+      const DeepCollectionEquality().hash(_allQuestions),
       const DeepCollectionEquality().hash(question),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(currentRound),
@@ -326,6 +352,7 @@ abstract class _GameManager implements GameManager {
   const factory _GameManager(
       {final List<Player> players,
       final List<String> randomQuestions,
+      final List<String> allQuestions,
       final String question,
       final GameStatus status,
       final int currentRound,
@@ -339,6 +366,8 @@ abstract class _GameManager implements GameManager {
   List<Player> get players => throw _privateConstructorUsedError;
   @override
   List<String> get randomQuestions => throw _privateConstructorUsedError;
+  @override
+  List<String> get allQuestions => throw _privateConstructorUsedError;
   @override
   String get question => throw _privateConstructorUsedError;
   @override

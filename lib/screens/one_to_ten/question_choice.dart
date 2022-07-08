@@ -18,7 +18,9 @@ class _QuestionChoiceState extends ConsumerState<QuestionChoice> {
   @override
   void initState() {
     super.initState();
-    ref.read(oneToTenGameProvider.notifier).generateThreeRandomQuestions();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(oneToTenGameProvider.notifier).generateThreeRandomQuestions();
+    });
   }
   @override
   Widget build(BuildContext context) {
