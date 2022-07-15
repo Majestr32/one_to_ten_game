@@ -18,28 +18,29 @@ class _QuestionChoiceState extends ConsumerState<QuestionChoice> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(oneToTenGameProvider.notifier).generateThreeRandomQuestions();
     });
   }
   @override
   Widget build(BuildContext context) {
+    final randomQuestions = ref.watch(oneToTenGameProvider).randomQuestions;
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            QuestionTile(question: ref.watch(oneToTenGameProvider).randomQuestions[0], onTap: (){
+            randomQuestions.isEmpty ? Container() : QuestionTile(question: randomQuestions[0], onTap: (){
               ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[0]);
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
             },),
             SizedBox(height: 20,),
-            QuestionTile(question: ref.watch(oneToTenGameProvider).randomQuestions[1], onTap: (){
+            randomQuestions.isEmpty ? Container() :QuestionTile(question: randomQuestions[1], onTap: (){
               ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[1]);
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
             },),
             SizedBox(height: 20,),
-            QuestionTile(question: ref.watch(oneToTenGameProvider).randomQuestions[2], onTap: (){
+            randomQuestions.isEmpty ? Container() : QuestionTile(question: randomQuestions[2], onTap: (){
               ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[2]);
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
             },),

@@ -38,9 +38,9 @@ class GameSummary extends ConsumerWidget {
                       margin: EdgeInsets.symmetric(vertical: 10),
                       child: Column(
                         children: [
-                          PlayerNameBox(playerNumber: ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber),
+                          PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName),
                           SizedBox(height: 5,),
-                          PlayerAnswerTextBox(playerNumber: ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber, hasEditIcon: true ,initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
+                          PlayerAnswerTextBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName, hasEditIcon: true ,initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
                         ],
                       ));
                 }),

@@ -219,7 +219,7 @@ class __$$_GameManagerCopyWithImpl<$Res> extends _$GameManagerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GameManager implements _GameManager {
+class _$_GameManager extends _GameManager {
   const _$_GameManager(
       {final List<Player> players = const [],
       final List<String> randomQuestions = const [],
@@ -236,7 +236,8 @@ class _$_GameManager implements _GameManager {
         _randomQuestions = randomQuestions,
         _allQuestions = allQuestions,
         _realAnswers = realAnswers,
-        _guessedAnswers = guessedAnswers;
+        _guessedAnswers = guessedAnswers,
+        super._();
 
   final List<Player> _players;
   @override
@@ -348,7 +349,7 @@ class _$_GameManager implements _GameManager {
       __$$_GameManagerCopyWithImpl<_$_GameManager>(this, _$identity);
 }
 
-abstract class _GameManager implements GameManager {
+abstract class _GameManager extends GameManager {
   const factory _GameManager(
       {final List<Player> players,
       final List<String> randomQuestions,
@@ -361,6 +362,7 @@ abstract class _GameManager implements GameManager {
       final int guesserPlayerNumber,
       final List<Answer> realAnswers,
       final List<Answer> guessedAnswers}) = _$_GameManager;
+  const _GameManager._() : super._();
 
   @override
   List<Player> get players => throw _privateConstructorUsedError;

@@ -41,13 +41,13 @@ class EvaluationScreen extends ConsumerWidget {
                           margin: EdgeInsets.symmetric(vertical: 10),
                           child: Column(
                             children: [
-                              PlayerNameBox(playerNumber: ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber),
+                              PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName),
                               SizedBox(height: 5,),
-                              PlayerNameBox(playerNumber: ref.watch(oneToTenGameProvider).guessedAnswers.firstWhere((ans) => ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer).playerNumber,
-                              suffixIconImage: ref.watch(oneToTenGameProvider).guessedAnswers.any((ans) => ans.playerNumber == ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber
+                              PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).guessedAnswers.firstWhere((ans) => ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer).playerName,
+                              suffixIconImage: ref.watch(oneToTenGameProvider).guessedAnswers.any((ans) => ans.playerName == ref.watch(oneToTenGameProvider).realAnswers[i].playerName
                               && ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer) ? KIcons.tick : KIcons.cross,),
                               SizedBox(height: 5,),
-                              PlayerAnswerTextBox(playerNumber: ref.watch(oneToTenGameProvider).realAnswers[i].playerNumber, initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
+                              PlayerAnswerTextBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName, initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
                             ],
                           ));
                     }),
@@ -61,7 +61,7 @@ class EvaluationScreen extends ConsumerWidget {
                   int scores = 0;
                   for(var realAnswer in ref.read(oneToTenGameProvider).realAnswers){
                     for(var guessedAnswer in ref.read(oneToTenGameProvider).guessedAnswers){
-                      if(realAnswer.playerNumber == guessedAnswer.playerNumber && realAnswer.answer == guessedAnswer.answer){
+                      if(realAnswer.playerName == guessedAnswer.playerName && realAnswer.answer == guessedAnswer.answer){
                         scores += 2;
                       }
                     }

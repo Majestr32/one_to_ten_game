@@ -37,7 +37,7 @@ class PodestScreen extends ConsumerWidget {
               child: Container(
                 margin: EdgeInsets.only(bottom: 15),
                 child: ActiveButton(text: AppLocalizations.of(context)!.button_menu, onPressed: (){
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
           },),
               )),
         ],
@@ -54,7 +54,7 @@ class PodestScreen extends ConsumerWidget {
             width: width,
             height: 40,
             child: Center(
-              child: Text(AppLocalizations.of(context)!.player_title(player.number.toString()), style: TextStyle(fontSize: fontSize, fontFamily: 'Bahn', fontWeight: FontWeight.normal),),
+              child: Text(player.name, style: TextStyle(fontSize: fontSize, fontFamily: 'Bahn', fontWeight: FontWeight.normal),),
             ),
           ),
           Expanded(

@@ -5,7 +5,7 @@ part 'answer.freezed.dart';
 @freezed
 class Answer with _$Answer{
   const factory Answer({
-    required int playerNumber,
+    required String playerName,
     required String answer,
   }) = _Answer;
 }

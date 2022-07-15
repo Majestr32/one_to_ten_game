@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:one_to_ten_game/providers/one_to_ten_game_provider.dart';
 
 import '../consts/k_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,7 +26,7 @@ class _PlayerDropdownNameBoxState extends ConsumerState<PlayerDropdownNameBox> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _choices = List.generate(widget.totalPlayersCount, (index) => (index + 1).toString());
+    _choices = List.generate(widget.totalPlayersCount, (index) => (ref.read(oneToTenGameProvider).players[index].name));
     _choices.removeAt(widget.guesserNumber - 1);
     _choices = ["-", ..._choices];
     _selectedItem = _choices.first;
@@ -61,9 +62,8 @@ class _PlayerDropdownNameBoxState extends ConsumerState<PlayerDropdownNameBox> {
           value: _selectedItem,
           items: List.generate(_choices.length, (index) => DropdownMenuItem<String>(
               value: _choices[index],
-              child: Text(isNumeric(_choices[index]) ?
-              AppLocalizations.of(context)!.player_title(_choices[index]) :
-              _choices[index]))), onChanged: (item){
+              child: Text(_choices[index])
+              )), onChanged: (item){
         setState((){
           _selectedItem = item ?? '';
         });
@@ -71,10 +71,7 @@ class _PlayerDropdownNameBoxState extends ConsumerState<PlayerDropdownNameBox> {
       }),
     );
   }
-  bool isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
-    return double.tryParse(s) != null;
+  bool isValid(String s) {
+    return s != "-";
   }
 }

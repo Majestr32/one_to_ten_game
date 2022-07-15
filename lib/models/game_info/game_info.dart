@@ -1,5 +1,4 @@
 class GameInfo{
-  final String name;
   final String idName;
   final String assetPath;
   final String? onClickRoutePath;
@@ -11,7 +10,6 @@ class GameInfo{
   final int? maxMinutesPlay;
 
   const GameInfo({
-    required this.name,
     required this.minRounds,
     required this.maxRounds,
     required this.idName,

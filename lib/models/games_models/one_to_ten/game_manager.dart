@@ -14,6 +14,7 @@ enum GameStatus{
 }
 @freezed
 class GameManager with _$GameManager{
+  const GameManager._();
   const factory GameManager({
     @Default([]) List<Player> players,
     @Default([]) List<String> randomQuestions,
@@ -27,4 +28,7 @@ class GameManager with _$GameManager{
     @Default([]) List<Answer> realAnswers,
     @Default([]) List<Answer> guessedAnswers,
   }) = _GameManager;
+
+  String get currentPlayerName => players[currentPlayerNumber - 1].name;
+  String get guesserPlayerName => players[guesserPlayerNumber - 1].name;
 }

@@ -45,7 +45,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerNumber.toString()),),
+      appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,8 +60,8 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
             ),
             SizedBox(height: 20,),
             Text(ref.watch(oneToTenGameProvider).status == GameStatus.guessing ?
-            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.guesserPlayerNumber.toString()) :
-            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.currentPlayerNumber.toString()), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Bahn'),)
+            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.guesserPlayerName) :
+            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.currentPlayerName), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Bahn'),)
           ],
         ),
       ),

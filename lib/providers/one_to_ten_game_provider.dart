@@ -19,19 +19,18 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
     _gameSettings = gameSettings;
   }
 
-  Future<void> init(GameSettings gameSettings) async{
+  Future<void> init(GameSettings gameSettings, List<String> playerNames) async{
     _gameSettings = gameSettings;
     //hardcoded because i am really tired
     final allQuestions = await QuestionsRepository().getQuestions();
-    log(allQuestions.length);
-    state = state.copyWith.call(allQuestions: allQuestions, players: List.generate(_gameSettings!.playersCount, (index) => Player(number: index + 1, score: 0)));
+    state = state.copyWith.call(allQuestions: allQuestions, players: List.generate(_gameSettings!.playersCount, (index) => Player(name: playerNames[index], score: 0)));
   }
   void submitAnswer(Answer answer){
     state = state.copyWith.call(realAnswers: [...state.realAnswers, answer]);
   }
   void editAnswer(Answer answer){
     final newAnswers = state.realAnswers.map((e){
-      if(e.playerNumber == answer.playerNumber){
+      if(e.playerName == answer.playerName){
         return answer;
       }
       return e;
@@ -67,15 +66,19 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
     int scores = 0;
     for(var realAnswer in state.realAnswers){
       for(var guessedAnswer in state.guessedAnswers){
-        if(realAnswer.playerNumber == guessedAnswer.playerNumber && realAnswer.answer == guessedAnswer.answer){
+        if(realAnswer.playerName == guessedAnswer.playerName && realAnswer.answer == guessedAnswer.answer){
           scores += 2;
         }
       }
     }
-    final nonGuessers = state.players.where((pl) => pl.number != state.guesserPlayerNumber);
-    final guesser = state.players.firstWhere((pl) => pl.number == state.guesserPlayerNumber);
-    final updatedGuesser = Player(number: state.guesserPlayerNumber, score: guesser.score + scores);
-    state = state.copyWith.call(players: [...nonGuessers, updatedGuesser]);
+    final guesser = state.players.firstWhere((pl) => pl.name == state.guesserPlayerName);
+    state = state.copyWith.call(players: state.players.map((pl){
+      if(pl.name == guesser.name){
+        return Player(name: state.guesserPlayerName, score: guesser.score + scores);
+      }else{
+        return pl;
+      }
+    }).toList());
   }
   void generateThreeRandomQuestions(){
     List<String> randomQuestions = [];
@@ -88,7 +91,7 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
     state = state.copyWith(question: question);
   }
   String _randomQuestion(){
-    final _random = new Random();
+    final _random = Random();
     return state.allQuestions[_random.nextInt(state.allQuestions.length)];
   }
   void _notifyNextIsGuessing(){

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Answer {
-  int get playerNumber => throw _privateConstructorUsedError;
+  String get playerName => throw _privateConstructorUsedError;
   String get answer => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -27,7 +27,7 @@ mixin _$Answer {
 abstract class $AnswerCopyWith<$Res> {
   factory $AnswerCopyWith(Answer value, $Res Function(Answer) then) =
       _$AnswerCopyWithImpl<$Res>;
-  $Res call({int playerNumber, String answer});
+  $Res call({String playerName, String answer});
 }
 
 /// @nodoc
@@ -40,14 +40,14 @@ class _$AnswerCopyWithImpl<$Res> implements $AnswerCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? playerNumber = freezed,
+    Object? playerName = freezed,
     Object? answer = freezed,
   }) {
     return _then(_value.copyWith(
-      playerNumber: playerNumber == freezed
-          ? _value.playerNumber
-          : playerNumber // ignore: cast_nullable_to_non_nullable
-              as int,
+      playerName: playerName == freezed
+          ? _value.playerName
+          : playerName // ignore: cast_nullable_to_non_nullable
+              as String,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
@@ -61,7 +61,7 @@ abstract class _$$_AnswerCopyWith<$Res> implements $AnswerCopyWith<$Res> {
   factory _$$_AnswerCopyWith(_$_Answer value, $Res Function(_$_Answer) then) =
       __$$_AnswerCopyWithImpl<$Res>;
   @override
-  $Res call({int playerNumber, String answer});
+  $Res call({String playerName, String answer});
 }
 
 /// @nodoc
@@ -75,14 +75,14 @@ class __$$_AnswerCopyWithImpl<$Res> extends _$AnswerCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? playerNumber = freezed,
+    Object? playerName = freezed,
     Object? answer = freezed,
   }) {
     return _then(_$_Answer(
-      playerNumber: playerNumber == freezed
-          ? _value.playerNumber
-          : playerNumber // ignore: cast_nullable_to_non_nullable
-              as int,
+      playerName: playerName == freezed
+          ? _value.playerName
+          : playerName // ignore: cast_nullable_to_non_nullable
+              as String,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
@@ -94,16 +94,16 @@ class __$$_AnswerCopyWithImpl<$Res> extends _$AnswerCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Answer implements _Answer {
-  const _$_Answer({required this.playerNumber, required this.answer});
+  const _$_Answer({required this.playerName, required this.answer});
 
   @override
-  final int playerNumber;
+  final String playerName;
   @override
   final String answer;
 
   @override
   String toString() {
-    return 'Answer(playerNumber: $playerNumber, answer: $answer)';
+    return 'Answer(playerName: $playerName, answer: $answer)';
   }
 
   @override
@@ -112,14 +112,14 @@ class _$_Answer implements _Answer {
         (other.runtimeType == runtimeType &&
             other is _$_Answer &&
             const DeepCollectionEquality()
-                .equals(other.playerNumber, playerNumber) &&
+                .equals(other.playerName, playerName) &&
             const DeepCollectionEquality().equals(other.answer, answer));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(playerNumber),
+      const DeepCollectionEquality().hash(playerName),
       const DeepCollectionEquality().hash(answer));
 
   @JsonKey(ignore: true)
@@ -130,11 +130,11 @@ class _$_Answer implements _Answer {
 
 abstract class _Answer implements Answer {
   const factory _Answer(
-      {required final int playerNumber,
+      {required final String playerName,
       required final String answer}) = _$_Answer;
 
   @override
-  int get playerNumber => throw _privateConstructorUsedError;
+  String get playerName => throw _privateConstructorUsedError;
   @override
   String get answer => throw _privateConstructorUsedError;
   @override

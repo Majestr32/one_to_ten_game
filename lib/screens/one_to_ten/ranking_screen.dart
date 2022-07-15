@@ -60,7 +60,7 @@ class _RankingScreenState extends ConsumerState<RankingScreen> {
                 child: Row(children: [
                   Text((i+1).toString(), style: TextStyle(fontSize: 32, fontFamily: 'LemonMilk', fontWeight: FontWeight.normal),),
                   Spacer(),
-                  Text("\"" + AppLocalizations.of(context)!.player_title(playersCopy[i].number.toString()) + "\"", style: TextStyle(fontSize: 32, fontFamily: 'LemonMilk', fontWeight: FontWeight.normal),),
+                  Text("\"" + playersCopy[i].name + "\"", style: TextStyle(fontSize: 32, fontFamily: 'LemonMilk', fontWeight: FontWeight.normal),),
                   Spacer(),
                   Text(playersCopy[i].score.toString() + " P.", style: TextStyle(fontSize: 32, fontFamily: 'LemonMilk', fontWeight: FontWeight.normal, color: i == 0 ? KColors.mainAccent : KColors.lightAccent),),
                 ],),

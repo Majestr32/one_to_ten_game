@@ -10,8 +10,7 @@
             }
         }
     },
-    "one_to_ten_boyz_game": "1to10 Boyz Game",
-    "drinking_game": "Drinking Game",
+    "title_instruction_title": "Instruction",
     "title_instruction": "In this game you will get to know your friends better. The question is, who knows their friends best?\nVarious open questions will be asked, to which you have to give an individual answer. In each round, each player has to find out which answer matches to which friend. For each correctly chosen answer, points are awarded to the guessing player.\nThe player who has the most points at the end is the winner.",
     "button_skip": "Skip",
     "player_title": "Player {playerNumber}",
@@ -26,26 +25,26 @@
     "timelimit_text": "Time limit per questions:",
     "seconds_text": "Sec.",
     "button_start": "Start",
-    "title_player_guesses": "\"Player {playerNumber}\" guesses",
+    "title_player_guesses": "\"{playerName}\" guesses",
     "@title_player_guesses" : {
             "placeholders": {
-                "playerNumber": {
+                "playerName": {
                     "type": "String"
                }
            }
     },
-    "text_load_page": "Give the phone to \"Player {playerNumber}\"",
+    "text_load_page": "Give the phone to \"{playerName}\"",
     "@text_load_page" : {
                 "placeholders": {
-                    "playerNumber": {
+                    "playerName": {
                         "type": "String"
                    }
                }
         },
-    "title_typing_player": "\"Player {playerNumber}\" answer",
+    "title_typing_player": "\"{playerName}\" answer",
     "@title_typing_player" : {
                     "placeholders": {
-                        "playerNumber": {
+                        "playerName": {
                             "type": "String"
                        }
                    }
@@ -56,22 +55,14 @@
     "title_answer_summary": "Answer Summary",
     "button_save": "Save",
     "title_game_preparation" : "Game preparation",
-    "title_edit_answer": "\"Player {playerNumber}\" Answer",
+    "title_edit_answer": "\"{playerName}\" Answer",
     "@title_edit_answer" : {
                         "placeholders": {
-                            "playerNumber": {
+                            "playerName": {
                                 "type": "String"
                            }
                        }
                 },
-    "title_player_guesses": "\"Player {playerNumber}\" guesses",
-    "@title_player_guesses" : {
-                            "placeholders": {
-                                "playerNumber": {
-                                    "type": "String"
-                               }
-                           }
-                    },
     "button_confirm": "Confirm",
     "title_evaluation": "Evaluation",
     "title_ranking": "Ranking",

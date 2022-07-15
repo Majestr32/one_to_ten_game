@@ -1,10 +1,10 @@
 
 class Player{
-  final int number;
+  final String name;
   final int score;
 
   const Player({
-    required this.number,
+    required this.name,
     required this.score,
   });
 }

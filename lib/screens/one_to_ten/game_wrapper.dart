@@ -23,7 +23,7 @@ class GameWrapper extends ConsumerWidget {
     final gameProviderState = ref.watch(oneToTenGameProvider);
     return Scaffold(
       body: Scaffold(
-        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_typing_player(ref.watch(oneToTenGameProvider).currentPlayerNumber.toString()),),
+        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_typing_player(gameProviderState.currentPlayerName),),
         body: Center(
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
@@ -37,13 +37,13 @@ class GameWrapper extends ConsumerWidget {
               ActiveButton(onPressed: (){
                 if(enteredAnswer.trim().isEmpty){
                   return;
-                }else if(RegExp(r"[^a-z ]", caseSensitive: false).hasMatch(enteredAnswer)){
+                }else if(RegExp(r"[^a-z0-9 ]", caseSensitive: false).hasMatch(enteredAnswer)){
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Only letters"),
+                    content: Text("Only letters and numbers"),
                   ));
                   return;
                 }
-                gameProviderNotifier.submitAnswer(Answer(answer: enteredAnswer, playerNumber: gameProviderState.currentPlayerNumber));
+                gameProviderNotifier.submitAnswer(Answer(answer: enteredAnswer, playerName: gameProviderState.currentPlayerName));
                 gameProviderNotifier.next();
                 if(gameProviderState.status == GameStatus.lastQuestion){
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameSummary()));

@@ -28,12 +28,12 @@ class _GuessScreenState extends ConsumerState<GuessScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    guesses = List.generate(ref.read(oneToTenGameProvider).players.length - 1, (index) => Answer(playerNumber: index + 1, answer: "-"));
+    guesses = List.generate(ref.read(oneToTenGameProvider).players.length - 1, (index) => Answer(playerName: '', answer: "-"));
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerNumber.toString()),),
+        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName),),
         body: SingleChildScrollView(
           child: Center(
             child: SizedBox(
@@ -59,10 +59,10 @@ class _GuessScreenState extends ConsumerState<GuessScreen> {
                               child: Column(
                                 children: [
                                   PlayerDropdownNameBox(guesserNumber: ref.watch(oneToTenGameProvider).guesserPlayerNumber, onItemChanged: (val){
-                                    guesses[i] = Answer(playerNumber: int.parse(val), answer: realAnswersCopy[i].answer);
+                                    guesses[i] = Answer(playerName: val, answer: realAnswersCopy[i].answer);
                                   }, totalPlayersCount: ref.watch(oneToTenGameProvider).players.length),
                                   SizedBox(height: 5,),
-                                  PlayerAnswerTextBox(playerNumber: realAnswersCopy[i].playerNumber, initialValue: realAnswersCopy[i].answer, readOnly: true,),
+                                  PlayerAnswerTextBox(playerName: realAnswersCopy[i].playerName, initialValue: realAnswersCopy[i].answer, readOnly: true,),
                                 ],
                               ));
                         });

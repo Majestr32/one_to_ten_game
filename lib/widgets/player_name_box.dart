@@ -4,9 +4,9 @@ import 'package:one_to_ten_game/consts/k_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlayerNameBox extends StatelessWidget {
-  final int playerNumber;
+  final String playerName;
   final Image? suffixIconImage;
-  const PlayerNameBox({required this.playerNumber, this.suffixIconImage,Key? key}) : super(key: key);
+  const PlayerNameBox({required this.playerName, this.suffixIconImage,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PlayerNameBox extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             children: [
-              Text(AppLocalizations.of(context)!.player_title(playerNumber.toString()), style: TextStyle(fontSize: 18, fontFamily: 'Bohn', fontWeight: FontWeight.bold),),
+              Text(playerName, style: TextStyle(fontSize: 18, fontFamily: 'Bohn', fontWeight: FontWeight.bold),),
               Spacer(),
               suffixIconImage == null ? Container() : ImageIcon(suffixIconImage!.image, size: 24,)
             ],

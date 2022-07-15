@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:one_to_ten_game/consts/k_games_names.dart';
 import 'package:one_to_ten_game/providers/games_provider.dart';
 import 'package:one_to_ten_game/providers/locale_provider.dart';
 import 'package:one_to_ten_game/providers/one_to_ten_game_provider.dart';
@@ -102,7 +103,7 @@ class HomePage extends ConsumerWidget {
                               itemBuilder: (context, i){
                                 return Container(
                                     margin: EdgeInsets.symmetric(vertical: 10),
-                                    child: HomeGameTile(routePath: gamesState[i].onClickRoutePath, title: gamesState[i].name, prefixSubtitle: AppLocalizations.of(context)!.game_players_count(gamesState[i].minPlayers.toString(), gamesState[i].maxPlayers.toString()), suffixSubtitle: gamesState[i].timeInfo, backgroundImageAssetUrl: gamesState[i].assetPath));
+                                    child: HomeGameTile(routePath: gamesState[i].onClickRoutePath, title: KGamesNames.name(gamesState[i].idName, ref.watch(localeProvider).languageCode), prefixSubtitle: AppLocalizations.of(context)!.game_players_count(gamesState[i].minPlayers.toString(), gamesState[i].maxPlayers.toString()), suffixSubtitle: gamesState[i].timeInfo, backgroundImageAssetUrl: gamesState[i].assetPath));
                               })
                     ),
                   ),

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:one_to_ten_game/consts/k_colors.dart';
+import 'package:one_to_ten_game/providers/games_provider.dart';
 
-class HomeGameTile extends HookWidget {
+class HomeGameTile extends ConsumerWidget {
   final String title;
   final String prefixSubtitle;
   final String suffixSubtitle;
@@ -14,11 +15,12 @@ class HomeGameTile extends HookWidget {
   const HomeGameTile({this.routePath, required this.title, required this.prefixSubtitle, required this.suffixSubtitle, required this.backgroundImageAssetUrl,Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loc = ref.watch(gamesProvider.notifier);
     return InkWell(
       onTap: (){
         if(routePath != null){
-          Navigator.of(context).pushNamed(routePath!);
+          Navigator.of(context).pushReplacementNamed(routePath!);
         }
       },
       child: Container(

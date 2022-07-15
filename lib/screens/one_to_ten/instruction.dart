@@ -27,12 +27,14 @@ class _InstructionScreenState extends ConsumerState<InstructionScreen> {
   void initState() {
     super.initState();
     GameInfo gameInfo = ref.read(gamesRepositoryProvider).getGameByIdName('1_to_10');
-    ref.read(currentGameSettingsProvider.notifier).init(GameSettings(info: gameInfo, playersCount: 4, roundsCount: 1));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(currentGameSettingsProvider.notifier).init(GameSettings(info: gameInfo, playersCount: 4, roundsCount: 1));
+    });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: StandartAppBar(title: 'Instruction'),
+        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_instruction_title),
         body: Center(
           child: Column(
             children: [
@@ -44,7 +46,12 @@ class _InstructionScreenState extends ConsumerState<InstructionScreen> {
               ImageIcon(KIcons.instructions.image, size: 196,),
               Spacer(),
               ActiveButton(onPressed: () async{
-                await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider));
+                await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider), [
+                  "Player 1",
+                  "Player 2",
+                  "Player 3",
+                  "Player 4"
+                ]);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GamePreparation()));
               }, text: AppLocalizations.of(context)!.button_skip),
               SizedBox(height: 20,)

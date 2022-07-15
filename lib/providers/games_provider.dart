@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:one_to_ten_game/models/game_info/game_info.dart';
 import 'package:one_to_ten_game/models/game_settings/one_to_ten/game_settings.dart';
@@ -16,7 +18,7 @@ class GamesRepositoryNotifier extends StateNotifier<GamesRepository>{
 
 class GameSettingsNotifier extends StateNotifier<GameSettings>{
   //create default value here
-  GameSettingsNotifier() : super(GameSettings(info: GameInfo(minRounds: 1, maxRounds: 2,idName: '',name: '', minPlayers: 4, maxPlayers: 8, assetPath: '')));
+  GameSettingsNotifier() : super(GameSettings(info: GameInfo(minRounds: 1, maxRounds: 2,idName: '', minPlayers: 4, maxPlayers: 8, assetPath: '')));
 
   void init(GameSettings settings){
     state = settings;

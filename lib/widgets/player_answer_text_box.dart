@@ -9,12 +9,12 @@ import 'package:one_to_ten_game/screens/one_to_ten/edit_answer.dart';
 class PlayerAnswerTextBox extends HookWidget {
   final bool readOnly;
   final String? initialValue;
-  final int? playerNumber;
+  final String? playerName;
   final bool hasEditIcon;
   final VoidCallback? onEditIconClicked;
   final Function(String)? onChanged;
 
-  PlayerAnswerTextBox({this.playerNumber, this.hasEditIcon = false, this.readOnly = false, this.onChanged, this.initialValue, this.onEditIconClicked, Key? key}) : super(key: key);
+  PlayerAnswerTextBox({this.playerName, this.hasEditIcon = false, this.readOnly = false, this.onChanged, this.initialValue, this.onEditIconClicked, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class PlayerAnswerTextBox extends HookWidget {
           ),
         ),
         hasEditIcon ? InkWell(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditAnswer(playerNumberToEdit: playerNumber!))),
+          onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EditAnswer(previousAnswer: initialValue ?? '',playerToEdit: playerName!))),
           child: Align(
             alignment: Alignment.topRight,
             child: Padding(
