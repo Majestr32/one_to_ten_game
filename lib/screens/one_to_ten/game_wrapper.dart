@@ -50,7 +50,7 @@ class GameWrapper extends ConsumerWidget {
                   return;
                 }
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
-              }, text: gameProviderState.status == GameStatus.lastQuestion ? AppLocalizations.of(context)!.button_summary : AppLocalizations.of(context)!.button_next),
+              }, text: gameProviderState.status == GameStatus.lastQuestion ? AppLocalizations.of(context)!.button_summarize : AppLocalizations.of(context)!.button_next),
               SizedBox(height: 15,),
             ],),
           ),

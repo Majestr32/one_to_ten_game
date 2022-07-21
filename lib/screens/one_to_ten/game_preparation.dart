@@ -18,18 +18,28 @@ import 'package:one_to_ten_game/widgets/rounded_dropdown.dart';
 import 'package:one_to_ten_game/widgets/standart_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class GamePreparation extends ConsumerWidget {
+class GamePreparation extends ConsumerStatefulWidget {
   GamePreparation({Key? key}) : super(key: key);
 
-  List<String> playerNames = [
-    "Player 1",
-    "Player 2",
-    "Player 3",
-    "Player 4"
-  ];
+  @override
+  ConsumerState<GamePreparation> createState() => _GamePreparationState();
+}
+
+class _GamePreparationState extends ConsumerState<GamePreparation> {
+
+
+  List<String> playerNames = [];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      playerNames = List.generate(ref.read(currentGameSettingsProvider).playersCount, (index) => AppLocalizations.of(context)!.player_title((index + 1).toString()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final settingsState = ref.watch(currentGameSettingsProvider);
     final settingsNotifier = ref.read(currentGameSettingsProvider.notifier);
     return Scaffold(
@@ -58,7 +68,7 @@ class GamePreparation extends ConsumerWidget {
                 }),
                 IconButton(onPressed: (){
                   settingsNotifier.incrementPlayersCount();
-                  playerNames.add('Player ' + (settingsState.playersCount + 1).toString());
+                  playerNames.add(AppLocalizations.of(context)!.player_title((settingsState.playersCount + 1).toString()));
                 }, icon: ImageIcon(KIcons.add.image, size: 36,)),
                 SizedBox(height: 15,),
                 SizedBox(
@@ -78,7 +88,6 @@ class GamePreparation extends ConsumerWidget {
                   ){
                     return;
                   }
-                  log("settings: players " +  ref.read(currentGameSettingsProvider).playersCount.toString() + " , rounds " + ref.read(currentGameSettingsProvider).roundsCount.toString());
                   await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider), playerNames);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => QuestionChoice()));
                 }, text: AppLocalizations.of(context)!.button_start),

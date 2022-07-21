@@ -51,6 +51,7 @@
             },
     "button_next" : "Next",
     "button_summary": "Summary",
+    "button_summarize": "Summary",
     "answer_textfield": "Your answer…",
     "title_answer_summary": "Answer Summary",
     "button_save": "Save",
