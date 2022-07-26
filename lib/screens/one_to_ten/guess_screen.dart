@@ -32,58 +32,64 @@ class _GuessScreenState extends ConsumerState<GuessScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName),),
-        body: SingleChildScrollView(
-          child: Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Column(
-                children: [
-                  Text(ref.watch(oneToTenGameProvider).question),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: 1,
-                      child: HorizontalLine()),
-                  SizedBox(height: 15,),
-                  ((){
-                    final realAnswersCopy = [...ref.watch(oneToTenGameProvider).realAnswers];
-                    realAnswersCopy.shuffle();
-                    return ListView.builder(
-                        itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, i){
-                          return Container(
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              child: Column(
-                                children: [
-                                  PlayerDropdownNameBox(guesserNumber: ref.watch(oneToTenGameProvider).guesserPlayerNumber, onItemChanged: (val){
-                                    guesses[i] = Answer(playerName: val, answer: realAnswersCopy[i].answer);
-                                  }, totalPlayersCount: ref.watch(oneToTenGameProvider).players.length),
-                                  SizedBox(height: 5,),
-                                  PlayerAnswerTextBox(playerName: realAnswersCopy[i].playerName, initialValue: realAnswersCopy[i].answer, readOnly: true,),
-                                ],
-                              ));
-                        });
-                  }()),
-                  SizedBox(height: 50,),
-                  ActiveButton(onPressed: (){
-                    if(guesses.any((ans) => ans.answer == "-")){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Your answers mustn`t be empty"),
-                      ));
-                      return;
-                    }
-                    ref.read(oneToTenGameProvider.notifier).submitGuesses(guesses);
-                    ref.read(oneToTenGameProvider.notifier).calculateScores();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EvaluationScreen()));
-                  }, text: AppLocalizations.of(context)!.button_confirm,),
-                  SizedBox(height: 15,),
-                ],
+    return WillPopScope(
+      onWillPop: () async{
+        return true;
+      },
+      child: Scaffold(
+          appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName),),
+          body: SingleChildScrollView(
+            child: Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Column(
+                  children: [
+                    Text(ref.watch(oneToTenGameProvider).question),
+                    SizedBox(height: 20,),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        height: 1,
+                        child: HorizontalLine()),
+                    SizedBox(height: 15,),
+                    ((){
+                      final realAnswersCopy = [...ref.watch(oneToTenGameProvider).realAnswers];
+                      realAnswersCopy.shuffle();
+                      return ListView.builder(
+                          itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, i){
+                            return Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                child: Column(
+                                  children: [
+                                    PlayerDropdownNameBox(guesserNumber: ref.watch(oneToTenGameProvider).guesserPlayerNumber, onItemChanged: (val){
+                                      guesses[i] = Answer(playerName: val, answer: realAnswersCopy[i].answer);
+                                    }, totalPlayersCount: ref.watch(oneToTenGameProvider).players.length),
+                                    SizedBox(height: 5,),
+                                    PlayerAnswerTextBox(playerName: realAnswersCopy[i].playerName, initialValue: realAnswersCopy[i].answer, readOnly: true,),
+                                  ],
+                                ));
+                          });
+                    }()),
+                    SizedBox(height: 50,),
+                    ActiveButton(onPressed: (){
+                      if(guesses.any((ans) => ans.answer == "-")){
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Your answers mustn`t be empty"),
+                        ));
+                        return;
+                      }
+                      ref.read(oneToTenGameProvider.notifier).submitGuesses(guesses);
+                      ref.read(oneToTenGameProvider.notifier).calculateScores();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EvaluationScreen()));
+                    }, text: AppLocalizations.of(context)!.button_confirm,),
+                    SizedBox(height: 15,),
+                  ],
+                ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }

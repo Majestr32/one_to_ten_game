@@ -21,40 +21,45 @@ class GameWrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final gameProviderNotifier = ref.watch(oneToTenGameProvider.notifier);
     final gameProviderState = ref.watch(oneToTenGameProvider);
-    return Scaffold(
-      body: Scaffold(
-        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_typing_player(gameProviderState.currentPlayerName),),
-        body: Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(children: [
-              Text(ref.watch(oneToTenGameProvider).question),
-              Spacer(),
-              PlayerAnswerTextBox(
-                onChanged: (text) {enteredAnswer = text;},
-              ),
-              SizedBox(height: 25,),
-              ActiveButton(onPressed: (){
-                if(enteredAnswer.trim().isEmpty){
-                  return;
-                }else if(RegExp(r"[^a-z0-9 ]", caseSensitive: false).hasMatch(enteredAnswer)){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Only letters and numbers"),
-                  ));
-                  return;
-                }
-                gameProviderNotifier.submitAnswer(Answer(answer: enteredAnswer, playerName: gameProviderState.currentPlayerName));
-                gameProviderNotifier.next();
-                if(gameProviderState.status == GameStatus.lastQuestion){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameSummary()));
-                  return;
-                }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
-              }, text: gameProviderState.status == GameStatus.lastQuestion ? AppLocalizations.of(context)!.button_summarize : AppLocalizations.of(context)!.button_next),
-              SizedBox(height: 15,),
-            ],),
-          ),
-        )
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: Scaffold(
+          appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_typing_player(gameProviderState.currentPlayerName),),
+          body: Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Column(children: [
+                Text(ref.watch(oneToTenGameProvider).question),
+                Spacer(),
+                PlayerAnswerTextBox(
+                  onChanged: (text) {enteredAnswer = text;},
+                ),
+                SizedBox(height: 25,),
+                ActiveButton(onPressed: (){
+                  if(enteredAnswer.trim().isEmpty){
+                    return;
+                  }else if(RegExp(r"[^a-z0-9 ]", caseSensitive: false).hasMatch(enteredAnswer)){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Only letters and numbers"),
+                    ));
+                    return;
+                  }
+                  gameProviderNotifier.submitAnswer(Answer(answer: enteredAnswer, playerName: gameProviderState.currentPlayerName));
+                  gameProviderNotifier.next();
+                  if(gameProviderState.status == GameStatus.lastQuestion){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameSummary()));
+                    return;
+                  }
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
+                }, text: gameProviderState.status == GameStatus.lastQuestion ? AppLocalizations.of(context)!.button_summarize : AppLocalizations.of(context)!.button_next),
+                SizedBox(height: 15,),
+              ],),
+            ),
+          )
+        ),
       ),
     );
   }

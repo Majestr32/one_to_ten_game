@@ -25,7 +25,7 @@
     "timelimit_text": "Time limit per questions:",
     "seconds_text": "Sec.",
     "button_start": "Start",
-    "title_player_guesses": "\"{playerName}\" guesses",
+    "title_player_guesses": "{playerName} guesses",
     "@title_player_guesses" : {
             "placeholders": {
                 "playerName": {
@@ -33,7 +33,7 @@
                }
            }
     },
-    "text_load_page": "Give the phone to \"{playerName}\"",
+    "text_load_page": "Give the phone to {playerName}",
     "@text_load_page" : {
                 "placeholders": {
                     "playerName": {
@@ -41,7 +41,7 @@
                    }
                }
         },
-    "title_typing_player": "\"{playerName}\" answer",
+    "title_typing_player": "{playerName} answer",
     "@title_typing_player" : {
                     "placeholders": {
                         "playerName": {
@@ -52,11 +52,15 @@
     "button_next" : "Next",
     "button_summary": "Summary",
     "button_summarize": "Summary",
+    "button_end_game": "End the game",
+    "button_no": "No",
+    "button_yes": "Yes",
+    "end_game_question": "Do you really want to end the game?",
     "answer_textfield": "Your answer…",
     "title_answer_summary": "Answer Summary",
     "button_save": "Save",
     "title_game_preparation" : "Game preparation",
-    "title_edit_answer": "\"{playerName}\" Answer",
+    "title_edit_answer": "{playerName} Answer",
     "@title_edit_answer" : {
                         "placeholders": {
                             "playerName": {

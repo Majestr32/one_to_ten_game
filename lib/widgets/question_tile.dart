@@ -21,7 +21,7 @@ class QuestionTile extends StatelessWidget {
           )
         ),
         child: Center(
-          child: Text(question, style: TextStyle(fontSize: 18, fontFamily: 'Bahn')),
+          child: Text(question, style: TextStyle(fontSize: 18, fontFamily: 'Bahn'), textAlign: TextAlign.center,),
         ),
       ),
     );

@@ -23,40 +23,48 @@ class InstructionScreen extends ConsumerStatefulWidget {
 
 class _InstructionScreenState extends ConsumerState<InstructionScreen> {
 
+  bool _visible = false;
   @override
   void initState() {
     super.initState();
     GameInfo gameInfo = ref.read(gamesRepositoryProvider).getGameByIdName('1_to_10');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(currentGameSettingsProvider.notifier).init(GameSettings(info: gameInfo, playersCount: 4, roundsCount: 1));
+      setState((){
+        _visible = true;
+      });
     });
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_instruction_title),
-        body: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.85,
-                child: Text(AppLocalizations.of(context)!.title_instruction, textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontFamily: 'Bahn'),),
-              ),
-              Spacer(),
-              ImageIcon(KIcons.instructions.image, size: 196,),
-              Spacer(),
-              ActiveButton(onPressed: () async{
-                await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider), [
-                  "Player 1",
-                  "Player 2",
-                  "Player 3",
-                  "Player 4"
-                ]);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GamePreparation()));
-              }, text: AppLocalizations.of(context)!.button_skip),
-              SizedBox(height: 20,)
-            ],
-          ),
-        ));
+    return AnimatedOpacity(
+      opacity: _visible ? 1.0 : 0,
+      duration: Duration(seconds: 1),
+      child: Scaffold(
+          appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_instruction_title, hasBackButton: true,),
+          body: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Text(AppLocalizations.of(context)!.title_instruction, textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontFamily: 'Bahn'),),
+                ),
+                Spacer(),
+                ImageIcon(KIcons.instructions.image, size: 196,),
+                Spacer(),
+                ActiveButton(onPressed: () async{
+                  await ref.read(oneToTenGameProvider.notifier).init(ref.read(currentGameSettingsProvider), [
+                    "Player 1",
+                    "Player 2",
+                    "Player 3",
+                    "Player 4"
+                  ]);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => GamePreparation()));
+                }, text: AppLocalizations.of(context)!.button_skip),
+                SizedBox(height: 20,)
+              ],
+            ),
+          )),
+    );
   }
 }

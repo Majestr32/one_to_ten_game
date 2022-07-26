@@ -9,4 +9,5 @@ class KIcons{
   static Image instructions = Image.asset('assets/icons/instructions.png');
   static Image minus = Image.asset('assets/icons/minus.png');
   static Image tick = Image.asset('assets/icons/tick.png');
+  static IconData backButton = Icons.arrow_back_ios_rounded;
 }

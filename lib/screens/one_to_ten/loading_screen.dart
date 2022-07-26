@@ -44,25 +44,30 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: LinearProgressIndicator(
-                backgroundColor: KColors.grey,
-                color: KColors.black,
-                minHeight: 11,
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_player_guesses(ref.watch(oneToTenGameProvider).guesserPlayerName)),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: LinearProgressIndicator(
+                  backgroundColor: KColors.grey,
+                  color: KColors.black,
+                  minHeight: 11,
+                ),
               ),
-            ),
-            SizedBox(height: 20,),
-            Text(ref.watch(oneToTenGameProvider).status == GameStatus.guessing ?
-            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.guesserPlayerName) :
-            AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.currentPlayerName), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Bahn'),)
-          ],
+              SizedBox(height: 20,),
+              Text(ref.watch(oneToTenGameProvider).status == GameStatus.guessing ?
+              AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.guesserPlayerName) :
+              AppLocalizations.of(context)!.text_load_page(ref.watch(oneToTenGameProvider.notifier).state.currentPlayerName), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Bahn'),)
+            ],
+          ),
         ),
       ),
     );

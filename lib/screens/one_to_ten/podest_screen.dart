@@ -8,42 +8,91 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers/one_to_ten_game_provider.dart';
 
-class PodestScreen extends ConsumerWidget {
-  const PodestScreen({Key? key}) : super(key: key);
+class PodestScreen extends ConsumerStatefulWidget {
+
+
+  PodestScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          ((){
-            final playersCopy = [...ref.watch(oneToTenGameProvider).players];
-            playersCopy.sort((a,b) => b.score.compareTo(a.score));
-            return Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  leaderBloc(context, playersCopy[1], MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.height * 0.55, 20 ,KColors.lightAccent),
-                  leaderBloc(context, playersCopy[0], MediaQuery.of(context).size.width * 0.35, MediaQuery.of(context).size.height * 0.7, 22, KColors.mainAccent),
-                  leaderBloc(context, playersCopy[2], MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.height * 0.5, 18,KColors.lightAccent),
-                ],
-              ),
-            );
-          }()),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 15),
-                child: ActiveButton(text: AppLocalizations.of(context)!.button_menu, onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
-          },),
-              )),
-        ],
+  ConsumerState<PodestScreen> createState() => _PodestScreenState();
+}
+
+class _PodestScreenState extends ConsumerState<PodestScreen> {
+  bool _visible3rd = false;
+  bool _visible2nd = false;
+  bool _visible1st = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(seconds: 1)).then((_){
+        setState((){
+          _visible3rd = true;
+        });
+      });
+      Future.delayed(Duration(seconds: 3)).then((_){
+        setState((){
+          _visible2nd = true;
+        });
+      });
+      Future.delayed(Duration(seconds: 6)).then((_){
+        setState((){
+          _visible1st = true;
+        });
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            ((){
+              final playersCopy = [...ref.watch(oneToTenGameProvider).players];
+              playersCopy.sort((a,b) => b.score.compareTo(a.score));
+              return Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AnimatedOpacity(
+                        opacity: _visible2nd ? 1 : 0,
+                        duration: Duration(seconds: 3),
+                        child: leaderBloc(context, playersCopy[1], MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.height * 0.55, 20 ,KColors.lightAccent)),
+                    AnimatedOpacity(
+                        opacity: _visible1st ? 1.0 : 0,
+                        duration: Duration(seconds: 2),
+                        child: leaderBloc(context, playersCopy[0], MediaQuery.of(context).size.width * 0.35, MediaQuery.of(context).size.height * 0.7, 22, KColors.mainAccent)),
+                    AnimatedOpacity(
+                        opacity: _visible3rd ? 1.0 : 0,
+                        duration: Duration(seconds: 2),
+                        child: leaderBloc(context, playersCopy[2], MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.height * 0.5, 18,KColors.lightAccent)),
+                  ],
+                ),
+              );
+            }()),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  child: ActiveButton(text: AppLocalizations.of(context)!.button_menu, onPressed: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
+            },),
+                )),
+          ],
+        ),
       ),
     );
   }
+
   Widget leaderBloc(BuildContext context,Player player, double width, double height, double fontSize, Color color){
     return SizedBox(
       width: width,

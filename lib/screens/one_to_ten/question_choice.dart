@@ -25,28 +25,24 @@ class _QuestionChoiceState extends ConsumerState<QuestionChoice> {
   @override
   Widget build(BuildContext context) {
     final randomQuestions = ref.watch(oneToTenGameProvider).randomQuestions;
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            randomQuestions.isEmpty ? Container() : QuestionTile(question: randomQuestions[0], onTap: (){
-              ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[0]);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
-            },),
-            SizedBox(height: 20,),
-            randomQuestions.isEmpty ? Container() :QuestionTile(question: randomQuestions[1], onTap: (){
-              ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[1]);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
-            },),
-            SizedBox(height: 20,),
-            randomQuestions.isEmpty ? Container() : QuestionTile(question: randomQuestions[2], onTap: (){
-              ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[2]);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
-            },),
-          ],
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (index) => randomQuestions.isEmpty ? Container() : Container(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: QuestionTile(question: randomQuestions[index], onTap: (){
+                ref.read(oneToTenGameProvider.notifier).chooseQuestion(ref.watch(oneToTenGameProvider).randomQuestions[index]);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoadingScreen()));
+              },),
+            ),
+          ),
         ),
-      ),
+      )),
     );
   }
 }

@@ -18,62 +18,71 @@ class EvaluationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_evaluation,),
-      body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              children: [
-                Text(ref.watch(oneToTenGameProvider).question),
-                SizedBox(height: 20,),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    height: 1,
-                    child: HorizontalLine()),
-                SizedBox(height: 15,),
-                ListView.builder(
-                    itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, i){
-                      return Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            children: [
-                              PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName),
-                              SizedBox(height: 5,),
-                              PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).guessedAnswers.firstWhere((ans) => ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer).playerName,
-                              suffixIconImage: ref.watch(oneToTenGameProvider).guessedAnswers.any((ans) => ans.playerName == ref.watch(oneToTenGameProvider).realAnswers[i].playerName
-                              && ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer) ? KIcons.tick : KIcons.cross,),
-                              SizedBox(height: 5,),
-                              PlayerAnswerTextBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName, initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
-                            ],
-                          ));
-                    }),
-                SizedBox(height: 15,),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    height: 1,
-                    child: HorizontalLine()),
-                SizedBox(height: 15,),
-                ((){
-                  int scores = 0;
-                  for(var realAnswer in ref.read(oneToTenGameProvider).realAnswers){
-                    for(var guessedAnswer in ref.read(oneToTenGameProvider).guessedAnswers){
-                      if(realAnswer.playerName == guessedAnswer.playerName && realAnswer.answer == guessedAnswer.answer){
-                        scores += 2;
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        appBar: StandartAppBar(title: AppLocalizations.of(context)!.title_evaluation,),
+        body: SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Column(
+                children: [
+                  Text(ref.watch(oneToTenGameProvider).question),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: 1,
+                      child: HorizontalLine()),
+                  SizedBox(height: 15,),
+                  ListView.builder(
+                      itemCount: ref.watch(oneToTenGameProvider).realAnswers.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, i){
+                        return Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              children: [
+                                PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName),
+                                SizedBox(height: 5,),
+                                PlayerNameBox(playerName: ref.watch(oneToTenGameProvider).guessedAnswers.firstWhere((ans) => ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer).playerName,
+                                suffixIconImage: ref.watch(oneToTenGameProvider).guessedAnswers.any((ans) => ans.playerName == ref.watch(oneToTenGameProvider).realAnswers[i].playerName
+                                && ans.answer == ref.watch(oneToTenGameProvider).realAnswers[i].answer) ? KIcons.tick : KIcons.cross,),
+                                SizedBox(height: 5,),
+                                PlayerAnswerTextBox(playerName: ref.watch(oneToTenGameProvider).realAnswers[i].playerName, initialValue: ref.watch(oneToTenGameProvider).realAnswers[i].answer, readOnly: true,),
+                              ],
+                            ));
+                      }),
+                  SizedBox(height: 15,),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: 1,
+                      child: HorizontalLine()),
+                  SizedBox(height: 15,),
+                  ((){
+                    int scores = 0;
+                    for(var realAnswer in ref.read(oneToTenGameProvider).realAnswers){
+                      for(var guessedAnswer in ref.read(oneToTenGameProvider).guessedAnswers){
+                        if(realAnswer.playerName == guessedAnswer.playerName && realAnswer.answer == guessedAnswer.answer){
+                          scores += 2;
+                        }
                       }
                     }
-                  }
-                  return Text(AppLocalizations.of(context)!.text_point_xy(scores.toString()), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, fontFamily: 'Bahn'),);
-                }()),
-                SizedBox(height: 15,),
-                ActiveButton(onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RankingScreen()));
-                }, text: AppLocalizations.of(context)!.button_next,),
-                SizedBox(height: 15,),
-              ],
+                    if(scores == (ref.read(oneToTenGameProvider).players.length - 1) * 2){
+                      scores += 2;
+                    }
+                    return Text(AppLocalizations.of(context)!.text_point_xy(scores.toString()), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, fontFamily: 'Bahn'),);
+                  }()),
+                  SizedBox(height: 15,),
+                  ActiveButton(onPressed: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RankingScreen()));
+                  }, text: AppLocalizations.of(context)!.button_next,),
+                  SizedBox(height: 15,),
+                ],
+              ),
             ),
           ),
         ),

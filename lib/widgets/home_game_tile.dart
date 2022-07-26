@@ -20,7 +20,7 @@ class HomeGameTile extends ConsumerWidget {
     return InkWell(
       onTap: (){
         if(routePath != null){
-          Navigator.of(context).pushReplacementNamed(routePath!);
+          Navigator.of(context).pushNamed(routePath!);
         }
       },
       child: Container(

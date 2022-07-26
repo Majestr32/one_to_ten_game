@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:one_to_ten_game/models/games_models/one_to_ten/game_manager.dart';
+import 'package:one_to_ten_game/providers/locale_provider.dart';
 import 'package:one_to_ten_game/repositories/one_to_ten_games/questions_repository.dart';
 
 import '../models/game_settings/one_to_ten/game_settings.dart';
@@ -11,18 +12,18 @@ import '../models/games_models/one_to_ten/answer.dart';
 import '../models/games_models/one_to_ten/player.dart';
 
 
-final oneToTenGameProvider = StateNotifierProvider<OneToTenGameNotifier, GameManager>((ref) => OneToTenGameNotifier());
+final oneToTenGameProvider = StateNotifierProvider<OneToTenGameNotifier, GameManager>((ref) => OneToTenGameNotifier(ref));
 
 class OneToTenGameNotifier extends StateNotifier<GameManager>{
   GameSettings? _gameSettings;
-  OneToTenGameNotifier({GameSettings? gameSettings}) : super(GameManager()){
+  final Ref ref;
+  OneToTenGameNotifier(this.ref,{GameSettings? gameSettings}) : super(GameManager()){
     _gameSettings = gameSettings;
   }
 
   Future<void> init(GameSettings gameSettings, List<String> playerNames) async{
     _gameSettings = gameSettings;
-    //hardcoded because i am really tired
-    final allQuestions = await QuestionsRepository().getQuestions();
+    final allQuestions = await ref.read(questionsRepository).getQuestions(ref.read(localeProvider).languageCode);
     state = state.copyWith.call(allQuestions: allQuestions, players: List.generate(_gameSettings!.playersCount, (index) => Player(name: playerNames[index], score: 0)));
   }
   void submitAnswer(Answer answer){
@@ -70,6 +71,9 @@ class OneToTenGameNotifier extends StateNotifier<GameManager>{
           scores += 2;
         }
       }
+    }
+    if(scores == (state.players.length - 1) * 2){
+      scores += 2;
     }
     final guesser = state.players.firstWhere((pl) => pl.name == state.guesserPlayerName);
     state = state.copyWith.call(players: state.players.map((pl){

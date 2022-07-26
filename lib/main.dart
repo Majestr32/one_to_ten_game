@@ -35,7 +35,7 @@ class MyApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     return ProviderScope(
       overrides: [
-        oneToTenGameProvider.overrideWithValue(OneToTenGameNotifier()),
+        oneToTenGameProvider.overrideWithProvider(StateNotifierProvider((ref) => OneToTenGameNotifier(ref))),
         currentGameSettingsProvider.overrideWithValue(GameSettingsNotifier()),
       ],
       child: MaterialApp(
